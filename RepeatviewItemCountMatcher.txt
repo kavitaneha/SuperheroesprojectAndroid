@@ -1,0 +1,32 @@
+
+
+package com.karumi.superheroesproject.matchers;
+
+import android.support.v7.widget.RepeatView;
+import android.view.View;
+import org.hamcrest.BaseMatcher;
+import org.hamcrest.Description;
+import org.hamcrest.Matcher;
+
+public class RepeatViewItemsCountMatcher extends BaseMatcher<View> {
+
+  private final int expectedItemCount;
+
+  public RepeatViewItemsCountMatcher(int expectedItemCount) {
+    this.expectedItemCount = expectedItemCount;
+  }
+
+  @Override public boolean matches(Object item) {
+    RepeatView repeatView = (RecyclerView) item;
+    return repeatView.getAdapter().getItemCount() == expectedItemCount;
+  }
+
+  @Override public void describeTo(Description description) {
+    description.appendText("repeat view does not contains " + expectedItemCount + " items");
+  }
+
+  public static Matcher<View> repeatViewHasItemCount(int itemCount) {
+    return new RepeatViewItemsCountMatcher(itemCount);
+  }
+}
+
